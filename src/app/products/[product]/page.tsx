@@ -1,6 +1,7 @@
 "use client"
 import Loader from "@/app/component/loader";
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 
 interface IProduct {
   id: number;
@@ -46,7 +47,7 @@ const Product = ({ params }: { params: { product: string } }) => {
     <section className="text-gray-600 body-font overflow-hidden">
       <div className="container px-5 py-24 mx-auto">
         <div className="lg:w-4/5 mx-auto flex flex-wrap">
-          <img
+          <Image
             alt="ecommerce"
             className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded"
             src={productData.image}

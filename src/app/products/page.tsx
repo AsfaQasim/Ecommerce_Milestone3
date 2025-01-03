@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 
 
@@ -40,7 +41,7 @@ const Products = async () => {
           >
             <Link href =  {`/products/${pro.id}`}>
             {/* Image Section */}
-            <img
+            <Image
               src={pro.image}
               alt={pro.title}
               className="w-full h-60 object-cover"
