@@ -2,7 +2,7 @@ import React from 'react';
 
 const Loader = () => {
   return (
-    <div className="min-h-screen w-full flex justify-center items-center bg-opacity-60 bg-blue-800 z-50 mt-60">
+    <div className="min-h-screen w-full flex justify-center items-center bg-opacity-60 z-50 mt-60">
       <div className="flex space-x-6">
         {/* Large Loader */}
         <div className="relative">

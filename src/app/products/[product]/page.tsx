@@ -18,7 +18,7 @@ interface IProduct {
 
 const Product = ({ params }: { params: { product: string } }) => {
   const [productData, setProductData] = useState<IProduct | null>(null);
-  const [isLoading, setIsLoading] = useState(true); // Track loading state
+  const [isLoading, setIsLoading] = useState(true); 
 
   useEffect(() => {
     // Fetch data and handle success and failure without try/catch
@@ -26,21 +26,21 @@ const Product = ({ params }: { params: { product: string } }) => {
       .then((response) => response.json())
       .then((data) => {
         setProductData(data);
-        setIsLoading(false); // Data fetched, stop loading
+        setIsLoading(false); 
       })
       .catch(() => {
-        setIsLoading(false); // Stop loading if there is an error
+        setIsLoading(false);
       });
   }, [params.product]);
 
-  // If still loading, show loader
+
   if (isLoading) {
     return <Loader />;
   }
 
-  // Once data is loaded, render the product details
+
   if (!productData) {
-    return <div>Error loading product data</div>; // Handle error if no data is available
+    return <div>Error loading product data</div>; 
   }
 
   return (
@@ -51,6 +51,7 @@ const Product = ({ params }: { params: { product: string } }) => {
             alt="ecommerce"
             className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded"
             src={productData.image}
+            width={100}
           />
           <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
             <h2 className="text-2xl title-font text-blue-900 tracking-widest">

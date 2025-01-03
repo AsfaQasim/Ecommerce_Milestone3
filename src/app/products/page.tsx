@@ -45,6 +45,8 @@ const Products = async () => {
               src={pro.image}
               alt={pro.title}
               className="w-full h-60 object-cover"
+              width={100}
+              height={100}
             />
             </Link>
 
@@ -62,6 +64,7 @@ const Products = async () => {
                 <strong>Rating:</strong> {pro.rating.rate} ⭐ ({pro.rating.count}{" "}
                 reviews)
               </p>
+
               <Link href={`products/${pro.id}`}>
               <button className="mt-3 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300">
                 Add to Cart
