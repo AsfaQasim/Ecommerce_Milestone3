@@ -1,9 +1,10 @@
 "use client"
 import Loader from "@/app/component/loader";
-import React, { useState, useEffect } from "react";
 import Image from "next/image";
+import React, { useEffect, useState } from "react";
+import Link from "next/link";
 
-interface IProduct {
+export interface IProduct {
   id: number;
   title: string;
   price: number;
@@ -18,15 +19,14 @@ interface IProduct {
 
 const Product = ({ params }: { params: { product: string } }) => {
   const [productData, setProductData] = useState<IProduct | null>(null);
-  const [isLoading, setIsLoading] = useState(true); 
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Fetch data and handle success and failure without try/catch
     fetch(`https://fakestoreapi.com/products/${params.product}`)
       .then((response) => response.json())
       .then((data) => {
         setProductData(data);
-        setIsLoading(false); 
+        setIsLoading(false);
       })
       .catch(() => {
         setIsLoading(false);
@@ -40,8 +40,31 @@ const Product = ({ params }: { params: { product: string } }) => {
 
 
   if (!productData) {
-    return <div>Error loading product data</div>; 
+    return <div>Error loading product data</div>;
   }
+
+  const handleCart = () => {
+    if (!productData) return;
+
+    const existingItem = JSON.parse(localStorage.getItem("item") || "[]");
+
+    const isProduct = existingItem.find((item: IProduct) => item.id === productData.id);
+
+    let updatedCart;
+    if (isProduct) {
+      updatedCart = existingItem.map((item: IProduct) =>
+        item.id === productData.id ? { ...item } : item
+      );
+    } else {
+      updatedCart = [...existingItem, productData];
+    }
+
+    localStorage.setItem("item", JSON.stringify(updatedCart));
+
+  };
+ 
+
+
 
   return (
     <section className="text-gray-600 body-font overflow-hidden">
@@ -51,7 +74,8 @@ const Product = ({ params }: { params: { product: string } }) => {
             alt="ecommerce"
             className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded"
             src={productData.image}
-            width={100}
+            width={800}
+            height={800}
           />
           <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
             <h2 className="text-2xl title-font text-blue-900 tracking-widest">
@@ -79,7 +103,14 @@ const Product = ({ params }: { params: { product: string } }) => {
               </span>
             </div>
             <p className="leading-relaxed text-blue-900">{productData.description}</p>
+            <br />
+            <p className="leading-relaxed text-blue-900 font-bold">Price: ${productData.price}</p>
             {/* Other product details like colors, sizes, and pricing */}
+            <Link href = "/cart">
+            <button className="mt-3 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300" onClick={handleCart}>
+              Add To Cart
+            </button>
+            </Link>
           </div>
         </div>
       </div>
