@@ -1,8 +1,9 @@
-"use client"
+"use client";
 import Loader from "@/app/component/loader";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import Link from "next/link";
+import { useDispatch } from "react-redux";
+import { add } from "@/app/cart/redux/cartslice";
 
 export interface IProduct {
   id: number;
@@ -20,6 +21,11 @@ export interface IProduct {
 const Product = ({ params }: { params: { product: string } }) => {
   const [productData, setProductData] = useState<IProduct | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const dispatch = useDispatch(); // Properly initialize useDispatch
+
+  const handleAdd = (product: IProduct) => {
+    dispatch(add(product)); // Add product to Redux store
+  };
 
   useEffect(() => {
     fetch(`https://fakestoreapi.com/products/${params.product}`)
@@ -33,38 +39,13 @@ const Product = ({ params }: { params: { product: string } }) => {
       });
   }, [params.product]);
 
-
   if (isLoading) {
     return <Loader />;
   }
 
-
   if (!productData) {
     return <div>Error loading product data</div>;
   }
-
-  const handleCart = () => {
-    if (!productData) return;
-
-    const existingItem = JSON.parse(localStorage.getItem("item") || "[]");
-
-    const isProduct = existingItem.find((item: IProduct) => item.id === productData.id);
-
-    let updatedCart;
-    if (isProduct) {
-      updatedCart = existingItem.map((item: IProduct) =>
-        item.id === productData.id ? { ...item } : item
-      );
-    } else {
-      updatedCart = [...existingItem, productData];
-    }
-
-    localStorage.setItem("item", JSON.stringify(updatedCart));
-
-  };
- 
-
-
 
   return (
     <section className="text-gray-600 body-font overflow-hidden">
@@ -105,12 +86,13 @@ const Product = ({ params }: { params: { product: string } }) => {
             <p className="leading-relaxed text-blue-900">{productData.description}</p>
             <br />
             <p className="leading-relaxed text-blue-900 font-bold">Price: ${productData.price}</p>
-            {/* Other product details like colors, sizes, and pricing */}
-            <Link href = "/cart">
-            <button className="mt-3 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300" onClick={handleCart}>
+            {/* Add to Cart Button */}
+            <button
+              onClick={() => handleAdd(productData)}
+              className="mt-3 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300"
+            >
               Add To Cart
             </button>
-            </Link>
           </div>
         </div>
       </div>

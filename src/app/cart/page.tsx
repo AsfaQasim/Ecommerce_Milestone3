@@ -22,7 +22,7 @@ const Cartpage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 py-8 px-4">
-      <h3 className="text-2xl md:text-3xl font-bold text-center mb-8">Your Cart</h3>
+      <h3 className="text-2xl md:text-3xl font-bold text-center mb-8 text-blue-900">Your Cart</h3>
       <div className="space-y-6">
         {cartItems.length > 0 ? (
           cartItems.map((item: CartItem) => (

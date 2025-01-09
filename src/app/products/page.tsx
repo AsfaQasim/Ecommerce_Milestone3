@@ -1,9 +1,8 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { add } from "../cart/redux/cartslice";
+
 
 interface IProduct {
   id: number;
@@ -20,7 +19,7 @@ interface IProduct {
 
 const Products = () => {
   const [products, setProducts] = useState<IProduct[]>([]);
-  const dispatch = useDispatch();
+
 
   useEffect(() => {
     // Fetch products from API
@@ -38,9 +37,7 @@ const Products = () => {
     fetchProducts();
   }, []);
 
-  const handleAdd = (product: IProduct) => {
-    dispatch(add(product)); // Add product to Redux store
-  };
+ 
 
   return (
     <div>
@@ -65,7 +62,9 @@ const Products = () => {
             </Link>
 
             <div className="p-5 flex flex-col gap-3">
-              <h2 className="text-xl font-bold text-gray-800">{product.title}</h2>
+              <h2 className="text-xl font-bold text-gray-800">
+                {product.title}
+              </h2>
               <p className="text-gray-600">{product.description}</p>
               <p className="text-lg font-semibold text-gray-800">
                 Price: ${product.price}
@@ -77,13 +76,6 @@ const Products = () => {
                 <strong>Rating:</strong> {product.rating.rate} ⭐ (
                 {product.rating.count} reviews)
               </p>
-
-              <button
-                onClick={() => handleAdd(product)}
-                className="mt-3 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition duration-300"
-              >
-                Add to Cart
-              </button>
 
               <Link href={`/products/${product.id}`}>
                 <button className="mt-3 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300">
