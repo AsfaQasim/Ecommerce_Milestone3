@@ -88,11 +88,15 @@ const Product = ({ params }: { params: { product: string } }) => {
             <p className="leading-relaxed text-blue-900 font-bold">Price: ${productData.price}</p>
             {/* Add to Cart Button */}
             <button
-              onClick={() => handleAdd(productData)}
-              className="mt-3 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300"
-            >
-              Add To Cart
-            </button>
+  onClick={() => {
+    handleAdd(productData);
+    alert("Item added to the cart");
+  }}
+  className="mt-3 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300"
+>
+  Add To Cart
+</button>
+
           </div>
         </div>
       </div>

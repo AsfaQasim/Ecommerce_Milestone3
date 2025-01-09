@@ -3,7 +3,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-
 interface IProduct {
   id: number;
   title: string;
@@ -20,7 +19,6 @@ interface IProduct {
 const Products = () => {
   const [products, setProducts] = useState<IProduct[]>([]);
 
-
   useEffect(() => {
     // Fetch products from API
     const fetchProducts = async () => {
@@ -36,8 +34,6 @@ const Products = () => {
 
     fetchProducts();
   }, []);
-
- 
 
   return (
     <div>
